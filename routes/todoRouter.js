@@ -4,7 +4,6 @@ const express = require('express');
 const todoRouter = express.Router()
 // creating a variable called Todo that pulls from the todo model
 const Todo = require("../models/todo");
-const send = require('send');
 
 
 /*
@@ -20,21 +19,12 @@ const send = require('send');
 ?            })
 ?         })
             
-            */
+*/
 
 /*
 * * post request mongoose 8 (no callbacks, adding async await)
 */
-todoRouter.post("/", async (req, res, next) => {
-    try {
-        const newTodo = new Todo(req.body)
-        const savedTodo = await newTodo.save()
-        return res.status(201).send(savedTodo)
-    } catch (error) {
-        res.status(500)
-        return next(error)
-    }
-})
+
 
 
 /* 
@@ -52,15 +42,6 @@ todoRouter.post("/", async (req, res, next) => {
 /*
 * * get request mongoose 8 (no callbacks, async await)
 */
-todoRouter.get("/", async (req, res, next) => {
-    try {
-        const foundTodos = await Todo.find()
-        return res.status(200).send(foundTodos)
-    } catch (error) {
-        res.status(500)
-        return next(error)
-    }
-})
 
 
 
@@ -87,16 +68,6 @@ todoRouter.get("/", async (req, res, next) => {
 /* 
 * * delete request mongoose 8 (no callbacks, async await)
 */
-todoRouter.delete("/:id", async (req, res, next) => {
-    try {
-        const foundTodo = await Todo.findByIdAndDelete(req.params.id)
-        return res.status(201).send(`You have successfully deleted ${foundTodo.title}`);
-
-    } catch (error) {
-        res.status(500)
-        return next(error)
-    }
-})
 
 
 
@@ -123,15 +94,6 @@ todoRouter.delete("/:id", async (req, res, next) => {
 /*
 * * put request mongoose 8 (no callbacks, async await)
 */
-todoRouter.put("/:id", async (req, res, next) => {
-    try {
-        const foundTodo = await Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        return res.status(201).send(`You have successfully updated ${foundTodo.title}`);
-    } catch (error) {
-        res.status(500)
-        return next(error)
-    }
-})
 
 
 
@@ -154,26 +116,6 @@ todoRouter.put("/:id", async (req, res, next) => {
 /*
  * * get one Todo mongoose 8 (no callbacks, async await)
 */
-todoRouter.get("/:id", async (req, res, next) => {
-    try {
-        const foundTodo = await Todo.findById(req.params.id)
-        return res.status(200).send(foundTodo);
-    } catch (error) {
-        res.status(500)
-        return next(error)
-    }
-})
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = todoRouter
